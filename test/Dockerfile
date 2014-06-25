@@ -1,4 +1,4 @@
-# Invenio on Ubuntu
+# Invenio test on Ubuntu
 #
 # VERSION 0.0.2
 
@@ -15,26 +15,23 @@ RUN apt-get update && apt-get -y upgrade
 # the toolbox
 RUN apt-get install -y vim ack-grep git subversion mercurial curl screen
 # python-related
-RUN apt-get install -y python python-dev python-pip virtualenvwrapper build-essential gfortran
+RUN apt-get install -y python-dev python-pip python-yaml build-essential gfortran
 # libraries
 RUN apt-get install -y libjpeg-dev libfreetype6-dev libmysqlclient-dev libtiff-dev libxml2-dev libxslt-dev libwebp-dev
 # PPA-only packages
 RUN apt-get install -y python-software-properties software-properties-common python-pycurl
 RUN add-apt-repository ppa:chris-lea/node.js
-RUN add-apt-repository ppa:jon-severinsson/ffmpeg
 RUN apt-get update
-RUN apt-get install -y nodejs ffmpeg
+RUN apt-get install -y nodejs
 # PIP requirements
-RUN pip install -U pip virtualenvwrapper flower honcho redis
+RUN pip install -U pip virtualenv redis
 # NPM requirements
-RUN npm install -g grunt-cli bower
+RUN npm install -g grunt-cli bower requirejs clean-css uglifyjs less
 
 #
 # Servers
 #
 RUN apt-get install -y mysql-server redis-server openssh-server supervisor
-# Remove initial database
-RUN rm -rf /var/lib/mysql/*
 # Prepare SSHD
 RUN mkdir -p /var/run/sshd
 RUN sed -i 's/.*session.*required.*pam_loginuid.so.*/session optional pam_loginuid.so/g' /etc/pam.d/sshd
@@ -55,19 +52,17 @@ RUN chmod 0440 /etc/sudoers.d/$USER
 RUN chmod 0777 /var/run/screen
 
 #
-# Once you're in, simply do $ ~/setup.sh
+# Setting up the scripts
 #
-ADD setup-mysql.sh /root/setup-mysql.sh
-RUN chmod +x /root/setup-mysql.sh
-ADD setup.sh /home/$USER/setup.sh
-RUN chown $USER:users /home/$USER/setup.sh
-RUN chmod +x /home/$USER/setup.sh
-RUN mkdir -p /home/$USER/.virtualenvs
-RUN chown $USER:users /home/$USER/.virtualenvs
+ADD runtests.sh /usr/local/bin/runtests
+RUN chmod +x /usr/local/bin/runtests
+ADD travis_retry.sh /usr/local/bin/travis_retry
+RUN chmod a+x /usr/local/bin/travis_retry
+ADD travis.py /usr/local/bin/travis
+RUN chmod a+x /usr/local/bin/travis
 
 EXPOSE 22
-EXPOSE 4000
 
-VOLUME /var/lib/mysql
-VOLUME /home/$USER/.virtualenvs
-CMD ["/usr/bin/supervisord"]
+# TODO put all the logs there
+#VOLUME /home/invenio/logs
+CMD ["/usr/bin/supervisord --nodaemon"]
