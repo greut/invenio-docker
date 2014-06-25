@@ -2,7 +2,8 @@
 
 # Variables to configure
 VIRTUALENV_NAME=pu
-PACKAGE=demosite
+PACKAGE=invenio_demosite
+#PACKAGE=cds
 PORT=4000
 
 # verbose
