@@ -65,4 +65,4 @@ EXPOSE 22
 
 # TODO put all the logs there
 #VOLUME /home/invenio/logs
-CMD ["/usr/bin/supervisord --nodaemon"]
+CMD /usr/bin/supervisord --nodaemon

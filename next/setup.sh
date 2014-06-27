@@ -27,8 +27,7 @@ die () {
 # Init virtualenvwrapper
 source /usr/local/bin/virtualenvwrapper.sh
 # Silent bower
-mkdir -p $HOME/.config/configstore
-echo optOut: true > $HOME/.config/configstore/insight-bower.yml
+export CI=true
 
 workon | grep -q ^${VIRTUALENV_NAME}$
 if [ "$?" -ne "0" ]; then
@@ -46,7 +45,7 @@ rm -rf src/demosite
 ln -s /opt/invenio src/invenio
 ln -s /opt/demosite src/demosite
 
-rm -rf var/invenio.instance-base
+rm -rf var/invenio.base-instance
 mkdir -p var/run
 mkdir -p var/tmp
 mkdir -p var/tmp-shared
@@ -58,9 +57,9 @@ cdvirtualenv src/invenio
 find . -iname "*.pyc" -exec rm {} \;
 
 if [ -e requirements-docs.txt ]; then
-    pip install -r requirements-docs.txt || die 1 "invenio install failed"
+    pip install -r requirements-docs.txt --exists-action w || die 1 "invenio install failed"
 elif [ -e requirements.txt]; then
-    pip install -r requirements.txt || die 1 "invenio install failed"
+    pip install -r requirements.txt --exists-action w || die 1 "invenio install failed"
 else
     python setup.py develop
 fi

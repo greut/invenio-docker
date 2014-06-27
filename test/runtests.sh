@@ -52,6 +52,7 @@ if [ $TRAVIS_TEST_RESULT -eq 0 ]; then
 else
     run travis after_failure
 fi
-run travis after_script || exit 1
+run travis after_script
 
 supervisorctl stop all
+exit $TRAVIS_TEST_RESULT
