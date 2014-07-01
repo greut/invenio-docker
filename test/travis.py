@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals, print_function
@@ -8,6 +8,10 @@ import sys
 import yaml
 import subprocess
 
+# Mapping the service name with the daemon name
+SERVICES = {
+    "redis": "redis-server"
+}
 
 def main(argv):
     action = argv[1]
@@ -18,12 +22,20 @@ def main(argv):
     with open(filename, "r") as f:
         travis = yaml.load(f)
 
-    for cmd in travis.get(action, []):
-        print("{0}> {1}".format(action, cmd), file=sys.stderr)
-        vcmd = ". {0}/bin/activate && {1}".format(os.environ['HOME'], cmd)
-        status = subprocess.call(vcmd, shell=True)
-        if status:
-            return status
+    if action == "services":
+        for service in travis.get(action, []):
+            cmd = "sudo service {0} start".format(SERVICES.get(service,
+                                                               service))
+            print("{0}> {1}".format(action, cmd))
+            status = subprocess.call(cmd, shell=True)
+            if status:
+                print("{0}> {1} failed".format(action, service))
+    else:
+        for cmd in travis.get(action, []):
+            print("{0}> {1}".format(action, cmd), file=sys.stderr)
+            status = subprocess.call(cmd, shell=True)
+            if status:
+                return status
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ The container to test your next/pu branch just like it would be done on Travis.
 ## Building commands
 
     $ cd next
-    $ docker -t greut/invenio .
+    $ docker build -t greut/invenio .
 
     $ cd test
-    $ docker -t greut/invenio:test .
+    $ docker build -t greut/invenio:test .
