@@ -71,7 +71,7 @@ RUN apt-get install -y nodejs
 # PIP requirements
 RUN pip install -U pip virtualenvwrapper flower honcho redis
 # NPM requirements
-RUN npm install -g grunt-cli bower
+RUN npm install -g grunt-cli bower less clean-css requirejs uglify-js
 
 #
 # Users

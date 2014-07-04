@@ -108,19 +108,10 @@ inveniomanage config set ASSETS_DEBUG True
 
 cdvirtualenv src/invenio
 
-inveniomanage config set CLEANCSS_BIN `find ${PWD}/node_modules -iname cleancss | grep \\.bin | head -1`
-
-inveniomanage config set LESS_BIN `find ${PWD}/node_modules -iname lessc | grep \\.bin |  head -1`
-inveniomanage config set LESS_RUN_IN_DEBUG True
-
-inveniomanage config set REQUIREJS_BIN `find ${PWD}/node_modules -iname r.js | grep \\.bin | head -1`
-inveniomanage config set REQUIREJS_RUN_IN_DEBUG False
-inveniomanage config set REQUIREJS_CONFIG js/build.js
-
-inveniomanage config set UGLIFYJS_BIN `find ${PWD}/node_modules -iname uglifyjs | grep \\.bin | head -1`
-
 inveniomanage config set COLLECT_STORAGE invenio.ext.collect.storage.link
 
+inveniomanage config set LESS_RUN_IN_DEBUG True
+inveniomanage config set REQUIREJS_RUN_IN_DEBUG False
 
 cdvirtualenv
 
