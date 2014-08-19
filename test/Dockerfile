@@ -1,6 +1,6 @@
 # Invenio test on Ubuntu
 #
-# VERSION 0.0.3
+# VERSION 0.0.4
 
 #FROM ubuntu:12.04
 FROM ubuntu:14.04
@@ -33,7 +33,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C7917B12
 RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install -y nodejs
-RUN npm install -g grunt-cli bower
+RUN npm install -g bower
 
 #
 # Servers

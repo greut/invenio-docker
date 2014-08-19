@@ -31,12 +31,11 @@ def main(argv):
             if status:
                 print("{0}> {1} failed".format(action, service))
     else:
+        status = 0
         for cmd in travis.get(action, []):
             print("{0}> {1}".format(action, cmd), file=sys.stderr)
-            status = subprocess.call(cmd, shell=True)
-            if status:
-                return status
-
+            status |= subprocess.call(cmd, shell=True)
+        return status
 
 if __name__ == "__main__":
     try:

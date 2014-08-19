@@ -1,6 +1,6 @@
 # Invenio on Ubuntu
 #
-# VERSION 0.0.3
+# VERSION 0.0.4
 
 FROM phusion/baseimage:latest
 MAINTAINER Yoan Blanc <yoan.blanc@cern.ch>
@@ -69,9 +69,9 @@ RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update
 RUN apt-get install -y nodejs
 # PIP requirements
-RUN pip install -U pip virtualenvwrapper flower honcho redis
+RUN pip install -U pip virtualenvwrapper flower honcho redis uwsgi
 # NPM requirements
-RUN npm install -g grunt-cli bower less clean-css requirejs uglify-js
+RUN npm install -g bower less clean-css requirejs uglify-js jshint
 
 #
 # Users

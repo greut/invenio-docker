@@ -61,16 +61,7 @@ if [ -e requirements-docs.txt ]; then
 elif [ -e requirements.txt]; then
     pip install -r requirements.txt --exists-action w || die 1 "invenio install failed"
 else
-    python setup.py develop
-fi
-if [ -e package.json ]; then
-    npm install
-fi
-if [ -e bower.json ]; then
-    bower install
-fi
-if [ -e Gruntfile.js ]; then
-    grunt || die 1 "grunt failed"
+    python setup.py develop || die 1 "invenio install failed"
 fi
 
 pybabel compile -fd invenio/base/translations
@@ -83,14 +74,13 @@ if [ -e requirements.txt ]; then
 else
     python setup.py develop || die 1 "demosite install failed"
 fi
-if [ -e package.json ]; then
-    npm install
+
+if [ -e bower-base.json ]; then
+    inveniomanage bower -i bower-base.json > bower.json
 fi
+
 if [ -e bower.json ]; then
     bower install
-fi
-if [ -e Gruntfile.js ]; then
-    grunt || die 1 "grunt failed"
 fi
 
 
@@ -119,7 +109,6 @@ inveniomanage collect
 
 inveniomanage database init --yes-i-know --user=root
 inveniomanage database create
-inveniomanage demosite create --packages=${PACKAGE}.base
 
 # populate requires the server to be running as well as redis.
 inveniomanage runserver &
