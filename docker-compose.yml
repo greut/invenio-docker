@@ -1,0 +1,29 @@
+web:
+  image: greut/invenio
+  links:
+    - db:db
+    - cache:cache
+  volumes:
+    - ..:/code
+    - ./virtualenvs:/home/invenio/.virtualenvs
+  environment:
+    - CFG_DATABASE_HOST=db
+    - CACHE_REDIS_HOST=cache
+  ports:
+    - "2222:22"
+    - "8080:8080"
+
+db:
+  image: mariadb:latest
+  environment:
+    - MYSQL_DATABASE=invenio
+    - MYSQL_USER=invenio
+    - MYSQL_PASSWORD=my123p$ss
+    - MYSQL_ROOT_PASSWORD=root
+  volumes:
+    - ../data/mysql:/var/lib/mysql
+  ports:
+    - "3306:3306"
+
+cache:
+  image: redis

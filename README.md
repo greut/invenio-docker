@@ -1,6 +1,6 @@
 # Invenio containers
 
-Docker containers to play with invenio next/pu branches.
+Docker containers to play with invenio 2.0 branch.
 
 ## Next
 
@@ -12,8 +12,6 @@ The container to test your next/pu branch just like it would be done on Travis.
 
 ## Building commands
 
-    $ cd next
-    $ docker build -t greut/invenio .
+    $ docker build -t greut/invenio -f next/Dockerfile .
 
-    $ cd test
-    $ docker build -t greut/invenio:test .
+    $ docker build -t greut/invenio:test -f test/Dockerfile .
