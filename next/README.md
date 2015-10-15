@@ -21,10 +21,9 @@ $ ln -s /code/invenio .
 $ ln -s /code/invenio_demosite .  # or another overlay
 
 $ cd invenio
-$ pip install -r requirements-dev.txt --exists-action w
-$ python setup.py develop
+$ pip install -e .
 
 $ cd ../invenio_demosite
-$ python setup.py develop
+$ pip install -e .
 ```
 

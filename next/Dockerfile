@@ -33,18 +33,21 @@ RUN apt-get -q -y install \
     ack-grep \
     build-essential \
     curl \
+    cython \
     gfortran \
     git \
     libjpeg-dev \
     libffi-dev \
     libfreetype6-dev \
-    libmysqlclient-dev \
+    libmagickwand-dev \
+    libmariadbclient-dev \
     libssl-dev \
     libtiff-dev \
     libxml2-dev \
     libxslt-dev \
     libwebp-dev \
     mercurial \
+    mariadb-client \
     nodejs \
     python \
     python-dev \

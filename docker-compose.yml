@@ -9,6 +9,7 @@ web:
   environment:
     - CFG_DATABASE_HOST=db
     - CACHE_REDIS_HOST=cache
+    - CELERY_RESULT_BACKEND=redis://cache:6379/1
   ports:
     - "2222:22"
     - "8080:8080"
