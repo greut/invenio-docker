@@ -54,6 +54,7 @@ RUN apt-get -q -y install \
     python-pip \
     python-pycurl \
     python-software-properties \
+    redis-tools \
     vim \
     software-properties-common \
     subversion \
