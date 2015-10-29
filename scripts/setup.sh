@@ -50,43 +50,32 @@ mkdir -p var/run
 mkdir -p var/tmp
 mkdir -p var/tmp-shared
 
-
-cdvirtualenv src/invenio
-
 # cleaning up old compiled files
 find . -iname "*.pyc" -exec rm {} \;
 
-if [ -e requirements-docs.txt ]; then
-    pip install -r requirements-docs.txt --exists-action w || die 1 "invenio install failed"
-elif [ -e requirements.txt]; then
-    pip install -r requirements.txt --exists-action w || die 1 "invenio install failed"
-else
-    python setup.py develop || die 1 "invenio install failed"
-fi
-
+cdvirtualenv src/invenio
+pip install -e .[development] || die 1 "invenio install failed"
 pybabel compile -fd invenio/base/translations
 
-
 cdvirtualenv src/demosite
+pip install -e . || die 1 "demosite install failed"
 
-if [ -e requirements.txt ]; then
-    pip install -r requirements.txt --exists-action i || die 1 "demosite install failed"
-else
-    python setup.py develop || die 1 "demosite install failed"
-fi
+cdvirutalenv src/design-overlay
+pip install -e . || die 1 "design overlay install failed"
 
-if [ -e bower-base.json ]; then
-    inveniomanage bower -i bower-base.json > bower.json
-fi
-
-if [ -e bower.json ]; then
-    bower install
-fi
 
 
 cdvirtualenv
 
 inveniomanage config create secret-key
+
+cfgfile=`inveniomanage config locate`
+cd `dirname $cfgfile`
+
+inveniomanage bower > bower.json
+echo '{"directory": "static/vendors"}' > .bowerrc
+bower install
+
 inveniomanage config set CFG_EMAIL_BACKEND flask.ext.email.backends.console.Mail
 inveniomanage config set CFG_BIBSCHED_PROCESS_USER ${USER}
 inveniomanage config set CFG_DATABASE_NAME invenio
@@ -110,7 +99,7 @@ cdvirtualenv
 
 inveniomanage collect
 
-inveniomanage database init --yes-i-know --user=root
+inveniomanage database init --yes-i-know --user=root --password=root
 inveniomanage database create
 
 # populate requires the server to be running as well as redis.

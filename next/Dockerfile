@@ -40,7 +40,7 @@ RUN apt-get -q -y install \
     libffi-dev \
     libfreetype6-dev \
     libmagickwand-dev \
-    libmariadbclient-dev \
+    libmysqlclient-dev \
     libssl-dev \
     libtiff-dev \
     libxml2-dev \
