@@ -80,9 +80,9 @@ inveniomanage config set CFG_EMAIL_BACKEND flask.ext.email.backends.console.Mail
 inveniomanage config set CFG_BIBSCHED_PROCESS_USER ${USER}
 inveniomanage config set CFG_DATABASE_NAME invenio
 inveniomanage config set CFG_DATABASE_USER invenio
-inveniomanage config set CFG_DATABASE_HOST inveniodocker_db_1
-inveniomanage config set CACHE_REDIS_HOST inveniodocker_cache_1
-inveniomanage config set CELERY_RESULT_BACKEND redis://inveniodocker_cache_1:6379/1
+inveniomanage config set CFG_DATABASE_HOST db
+inveniomanage config set CACHE_REDIS_HOST cache
+inveniomanage config set CELERY_RESULT_BACKEND redis://cache:6379/1
 inveniomanage config set CFG_SITE_URL http://0.0.0.0:${PORT}
 inveniomanage config set CFG_SITE_SECURE_URL http://0.0.0.0:${PORT}
 inveniomanage config set DEBUG True
